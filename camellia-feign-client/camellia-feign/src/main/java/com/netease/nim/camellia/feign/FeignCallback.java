@@ -18,6 +18,7 @@ import com.netease.nim.camellia.feign.discovery.FeignServerInfo;
 import com.netease.nim.camellia.feign.discovery.SimpleResourcePool;
 import com.netease.nim.camellia.feign.exception.CamelliaFeignException;
 import com.netease.nim.camellia.feign.exception.CamelliaFeignFallbackErrorException;
+import com.netease.nim.camellia.feign.lane.FeignLaneRouteContext;
 import com.netease.nim.camellia.feign.resource.FeignDiscoveryResource;
 import com.netease.nim.camellia.feign.resource.FeignResource;
 import com.netease.nim.camellia.feign.resource.FeignResourceUtils;
@@ -105,7 +106,8 @@ public class FeignCallback<T> implements MethodInterceptor {
                 } else if (resource instanceof FeignDiscoveryResource) {
                     CamelliaDiscovery discovery = feignEnv.getDiscoveryFactory().getDiscovery(((FeignDiscoveryResource) resource).getServiceName());
                     CamelliaServerHealthChecker<FeignServerInfo> healthChecker = feignEnv.getHealthChecker();
-                    pool = new DiscoveryResourcePool((FeignDiscoveryResource) resource, discovery, serverSelector, healthChecker, feignEnv.getScheduledExecutor());
+                    pool = new DiscoveryResourcePool((FeignDiscoveryResource) resource, discovery, serverSelector, healthChecker,
+                            feignEnv.getScheduledExecutor(), feignEnv.getDiscoveryFactory(), getLaneRouteContext());
                 } else {
                     throw new IllegalArgumentException("not support resource");
                 }
@@ -129,6 +131,13 @@ public class FeignCallback<T> implements MethodInterceptor {
                 throw e;
             }
         }
+    }
+
+    private FeignLaneRouteContext getLaneRouteContext() {
+        if (feignEnv.getLaneIdProvider() == null || feignEnv.getLaneRouteResolver() == null) {
+            return null;
+        }
+        return new FeignLaneRouteContext(bid, bgroup, apiType, feignEnv.getLaneIdProvider(), feignEnv.getLaneRouteResolver());
     }
 
     private CamelliaCircuitBreaker getCircuitBreaker(Resource resource) {

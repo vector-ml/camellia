@@ -4,6 +4,8 @@ import com.netease.nim.camellia.core.client.env.ProxyEnv;
 import com.netease.nim.camellia.core.discovery.*;
 import com.netease.nim.camellia.feign.conf.InvokeLogLevel;
 import com.netease.nim.camellia.feign.discovery.FeignServerInfo;
+import com.netease.nim.camellia.feign.lane.FeignLaneIdProvider;
+import com.netease.nim.camellia.feign.lane.FeignLaneRouteResolver;
 import com.netease.nim.camellia.tools.executor.CamelliaThreadFactory;
 
 import java.util.concurrent.Executors;
@@ -22,18 +24,25 @@ public class CamelliaFeignEnv {
     private FallbackExceptionChecker fallbackExceptionChecker = new FallbackExceptionChecker.Default();
     private ScheduledExecutorService scheduledExecutor = defaultScheduledExecutor;
     private InvokeLogLevel invokeLogLevel = InvokeLogLevel.DEBUG;
+    private FeignLaneIdProvider laneIdProvider;
+    private FeignLaneRouteResolver laneRouteResolver;
 
     private CamelliaFeignEnv() {
     }
 
     private CamelliaFeignEnv(ProxyEnv proxyEnv, CamelliaDiscoveryFactory discoveryFactory,
                              CamelliaServerHealthChecker<FeignServerInfo> healthChecker,
-                             FallbackExceptionChecker fallbackExceptionChecker, ScheduledExecutorService scheduledExecutor) {
+                             FallbackExceptionChecker fallbackExceptionChecker, ScheduledExecutorService scheduledExecutor,
+                             InvokeLogLevel invokeLogLevel, FeignLaneIdProvider laneIdProvider,
+                             FeignLaneRouteResolver laneRouteResolver) {
         this.proxyEnv = proxyEnv;
         this.discoveryFactory = discoveryFactory;
         this.healthChecker = healthChecker;
         this.fallbackExceptionChecker = fallbackExceptionChecker;
         this.scheduledExecutor = scheduledExecutor == null ? defaultScheduledExecutor : scheduledExecutor;
+        this.invokeLogLevel = invokeLogLevel;
+        this.laneIdProvider = laneIdProvider;
+        this.laneRouteResolver = laneRouteResolver;
     }
 
     public static CamelliaFeignEnv defaultFeignEnv() {
@@ -64,6 +73,14 @@ public class CamelliaFeignEnv {
         return invokeLogLevel;
     }
 
+    public FeignLaneIdProvider getLaneIdProvider() {
+        return laneIdProvider;
+    }
+
+    public FeignLaneRouteResolver getLaneRouteResolver() {
+        return laneRouteResolver;
+    }
+
     public static class Builder {
         private final CamelliaFeignEnv feignEnv;
         public Builder() {
@@ -71,7 +88,9 @@ public class CamelliaFeignEnv {
         }
 
         public Builder(CamelliaFeignEnv feignEnv) {
-            this.feignEnv = new CamelliaFeignEnv(feignEnv.proxyEnv, feignEnv.discoveryFactory, feignEnv.healthChecker, feignEnv.fallbackExceptionChecker, feignEnv.scheduledExecutor);
+            this.feignEnv = new CamelliaFeignEnv(feignEnv.proxyEnv, feignEnv.discoveryFactory, feignEnv.healthChecker,
+                    feignEnv.fallbackExceptionChecker, feignEnv.scheduledExecutor, feignEnv.invokeLogLevel,
+                    feignEnv.laneIdProvider, feignEnv.laneRouteResolver);
         }
 
         public Builder proxyEnv(ProxyEnv proxyEnv) {
@@ -101,6 +120,16 @@ public class CamelliaFeignEnv {
 
         public Builder invokeLogLevel(InvokeLogLevel invokeLogLevel) {
             feignEnv.invokeLogLevel = invokeLogLevel;
+            return this;
+        }
+
+        public Builder laneIdProvider(FeignLaneIdProvider laneIdProvider) {
+            feignEnv.laneIdProvider = laneIdProvider;
+            return this;
+        }
+
+        public Builder laneRouteResolver(FeignLaneRouteResolver laneRouteResolver) {
+            feignEnv.laneRouteResolver = laneRouteResolver;
             return this;
         }
 
