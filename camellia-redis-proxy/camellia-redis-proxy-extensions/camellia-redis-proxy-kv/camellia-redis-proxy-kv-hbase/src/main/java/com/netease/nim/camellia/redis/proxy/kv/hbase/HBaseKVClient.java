@@ -78,7 +78,8 @@ public class HBaseKVClient implements KVClient {
                 template = new CamelliaHBaseTemplate(hBaseEnv, hBaseResource);
                 logger.info("hbase template init success, namespace = {}, resource = {}", namespace, string);
             } else if (configType.equalsIgnoreCase("remote")) {
-                String dashboardUrl = RedisKvConf.getString(namespace, "kv.store.hbase.camellia.dashboard.url", null);
+                String url = ProxyDynamicConf.getString("camellia.dashboard.url", null);
+                String dashboardUrl = RedisKvConf.getString(namespace, "kv.store.hbase.camellia.dashboard.url", url);
                 if (dashboardUrl == null) {
                     throw new KvException("illegal dashboardUrl, namespace = " + namespace);
                 }
