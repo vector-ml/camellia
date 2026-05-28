@@ -20,7 +20,7 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.lz4</groupId>
+			<groupId>at.yawk.lz4</groupId>
 			<artifactId>lz4-java</artifactId>
 			<version>${lz4-java.version}</version>
 		</dependency>
@@ -44,9 +44,40 @@
 			<artifactId>okhttp</artifactId>
 			<version>${okhttp.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.1</version>
+				<executions>
+					<execution>
+						<id>copy-legacy-lz4</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.lz4</groupId>
+									<artifactId>lz4-java</artifactId>
+									<version>${legacy-lz4-java.version}</version>
+									<outputDirectory>${project.build.directory}/test-libs</outputDirectory>
+									<destFileName>org-lz4-java-${legacy-lz4-java.version}.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
