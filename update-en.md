@@ -1,6 +1,18 @@
 [中文版](update-zh.md)
 
 
+# 1.4.2 (2026/06/11)
+### New Features
+* camellia-feign-client adds lane routing support, allowing target instance selection by lane through `FeignLaneIdProvider` and `FeignLaneRouteResolver`, with configurable failure fallback behavior
+* camellia-feign-client adds unit tests for `DiscoveryResourcePool` lane routing scenarios
+* camellia-delay-queue and camellia-hot-key add unit test coverage for core SDK, server, rules, counters, callbacks, and related components
+* camellia-tools adds lz4 compression compatibility tests
+
+### Updates
+* camellia-tools upgrades lz4-java from `org.lz4:lz4-java:1.8.0` to `at.yawk.lz4:lz4-java:1.11.0`, while keeping compatibility tests for the legacy version
+* camellia-redis-proxy kv hbase module supports using the global config key `camellia.dashboard.url` as the default dashboard URL in remote config mode
+
+
 # 1.4.1 (2026/04/30)
 ### New Features
 * camellia-redis-proxy multi-tenant routing now supports finer-grained selection by `username` + `password`, with fallback to password-only matching
@@ -132,7 +144,7 @@
 * camellia-redis-proxy, kv, added protection logic when data is inconsistent under zset version=1
 * camellia-redis-proxy, kv, optimized lru-cache logging
 * camellia-redis-proxy, kv, under zset version=1, index write is async by default
-* camellia-redis-proxy, kv, obkv-client upgraded to version 1.4.1
+* camellia-redis-proxy, kv, obkv-client upgraded to version 1.4.2
 * camellia-redis-proxy, kv, added monitoring for gc scan key count
 * camellia-redis-proxy, kv, during gc scan, meta-key and sub-key execute concurrently
 * camellia-redis-proxy, kv, during gc scan, sub-key deletion adds key version check

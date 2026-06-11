@@ -1,6 +1,18 @@
 [ENGLISH](update-en.md)
 
 
+# 1.4.2（2026/06/11）
+### 新增
+* camellia-feign-client，新增泳道能力，支持通过 `FeignLaneIdProvider` 和 `FeignLaneRouteResolver` 按泳道选择目标实例，并支持失败回退策略
+* camellia-feign-client，补充泳道场景下的 `DiscoveryResourcePool` 单元测试
+* camellia-delay-queue、camellia-hot-key，补充核心 SDK、server、规则、计数器、回调等单元测试覆盖
+* camellia-tools，补充 lz4 压缩兼容性测试
+
+### 更新
+* camellia-tools，lz4-java 从 `org.lz4:lz4-java:1.8.0` 升级到 `at.yawk.lz4:lz4-java:1.11.0`，并保留旧版本兼容性测试
+* camellia-redis-proxy，kv hbase 模块在 remote 配置模式下支持使用全局配置项 `camellia.dashboard.url` 作为默认 dashboard 地址
+
+
 # 1.4.1（2026/04/30）
 ### 新增
 * camellia-redis-proxy，多租户路由支持按 `username` + `password` 做更细粒度匹配，未命中时回退到仅 `password`
@@ -132,7 +144,7 @@
 * camellia-redis-proxy，kv，在zset的version=1下，在数据不一致时，增加了一个保护逻辑
 * camellia-redis-proxy，kv，优化了lru-cache的日志打印
 * camellia-redis-proxy，kv，在zset的version=1下，index默认开启异步写入
-* camellia-redis-proxy，kv，obkv-client升级版本到1.4.1
+* camellia-redis-proxy，kv，obkv-client升级版本到1.4.2
 * camellia-redis-proxy，kv，增加gc扫描key数量的监控
 * camellia-redis-proxy，kv，gc扫描时，meta-key和sub-key并发执行
 * camellia-redis-proxy，kv，gc扫描时，sub-key删除时增加key版本号判断
