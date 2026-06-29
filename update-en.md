@@ -1,6 +1,11 @@
 [中文版](update-zh.md)
 
 
+# 1.4.3 (unreleased)
+### New Features
+* camellia-redis-proxy supports redis 7.4+ hash field expiration commands (HEXPIRE/HPEXPIRE/HEXPIREAT/HPEXPIREAT/HPERSIST/HTTL/HPTTL/HEXPIRETIME/HPEXPIRETIME) and redis 8.0+ HGETEX/HSETEX/HGETDEL, routed as single-key hash commands
+
+
 # 1.4.2 (2026/06/11)
 ### New Features
 * camellia-feign-client adds lane routing support, allowing target instance selection by lane through `FeignLaneIdProvider` and `FeignLaneRouteResolver`, with configurable failure fallback behavior
