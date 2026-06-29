@@ -1,0 +1,17 @@
+name: camellia
+id: ari:cloud:compass:6a51d52e-c04c-46db-8aa3-c4ca310eb3de:component/6a9012c2-6540-4e6e-b1eb-d5d76ce80b15/3d830cb9-a670-4535-a8e1-6e0375b6cd1d
+description: 'Camellia provide easy-to-use server toolkits, such as: redis proxy、delay queue、id gen、hot key and more'
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/vector-ml/camellia
+relationships:
+  DEPENDS_ON: []
+labels:
+  - source:github
+  - synced-with-jsm
+customFields: null
