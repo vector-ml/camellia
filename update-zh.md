@@ -1,6 +1,11 @@
 [ENGLISH](update-en.md)
 
 
+# 1.4.3（unreleased）
+### 新增
+* camellia-redis-proxy，支持 redis 7.4+ 的 hash field 过期命令（HEXPIRE/HPEXPIRE/HEXPIREAT/HPEXPIREAT/HPERSIST/HTTL/HPTTL/HEXPIRETIME/HPEXPIRETIME）以及 redis 8.0+ 的 HGETEX/HSETEX/HGETDEL，按单 key hash 命令路由
+
+
 # 1.4.2（2026/06/11）
 ### 新增
 * camellia-feign-client，新增泳道能力，支持通过 `FeignLaneIdProvider` 和 `FeignLaneRouteResolver` 按泳道选择目标实例，并支持失败回退策略
